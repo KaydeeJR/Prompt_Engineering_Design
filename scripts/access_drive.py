@@ -1,5 +1,5 @@
 """ TODO: Change Spreadsheet ID
-    The file accesses my drive folder and fetches an Excel file"""
+    The file accesses my Google drive folder and fetches the Excel file"""
 from __future__ import print_function
 
 import os.path
