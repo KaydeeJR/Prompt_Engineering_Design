@@ -11,3 +11,13 @@ def excel_to_dataframe(filePath,repository,version):
     rev=version,
     mode='rb')
     return pd.read_excel(data)
+
+def text_to_dataframe(filePath,repository,version):
+    """
+    Read text file which is in json format and convert to dataframe.
+    """
+    data = dvc.api.read(filePath,
+    repo= repository,
+    rev=version,
+    mode='rb')
+    return pd.read_json(data)

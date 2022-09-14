@@ -1,14 +1,17 @@
 """
 TODO: Change Repo path and DVC data path
+TRY DVC pull
 """
 import os
 import sys
 import pandas as pd
 import mysql.connector as mysql
 from mysql.connector import Error
-from extract_dataframe import excel_to_dataframe
+from extract_dataframe import excel_to_dataframe, text_to_dataframe
 
-dvc_data_path = 'data/example_data.xlsx'
+dvc_news_data_path = 'data/example_data.xlsx'
+dvc_jobs_train_data_path = 'data/jobs_desc_training_data.txt'
+dvc_jobs_test_data_path ='data/jobs_desc_testing_data.txt'
 repository_path = 'https://github.com/KaydeeJR/Prompt_Engineering_Design'
 
 def DBConnect(dbName=None):
@@ -58,7 +61,7 @@ def insert_to_news_table(dbName: str, df: pd.DataFrame, table_name: str) -> None
             conn.rollback()
             print("Error: ", e)
 
-def db_execute_fetch(*args, many=False,dBName, tablename, rdf=True) -> pd.DataFrame:
+def db_execute_fetch(dBName, tablename, rdf=True, many=False, ) -> pd.DataFrame:
     """
     fetch data from table in database and save as dataframe
     """
@@ -89,10 +92,17 @@ def db_execute_fetch(*args, many=False,dBName, tablename, rdf=True) -> pd.DataFr
         return res
 
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     createDB(dbName='news')
     createTable(dbName='news')
-
-    dataframe = excel_to_dataframe(filePath=dvc_data_path, repository= repository_path, version='v1.0')
+    # read data from excel file
+    example_dataframe = excel_to_dataframe(filePath=dvc_news_data_path, repository= repository_path, version='v1.0')
+    # add data to the database
     insert_to_news_table(dbName='news', df=dataframe, table_name='NewsArticles')
-    dataframe = db_execute_fetch(dBName='news', tablename='newsarticles')
+
+if __name__ == "__main__":
+    example_dataframe = excel_to_dataframe(filePath=dvc_news_data_path, repository= repository_path, version='v1.0')
+    train_dataframe = text_to_dataframe(filePath=dvc_jobs_train_data_path, repository= repository_path, version='v2.0')
+    print(train_dataframe.shape)
+    test_dataframe = text_to_dataframe(filePath=dvc_jobs_test_data_path, repository= repository_path, version='v3.0')
+    print(test_dataframe.shape)
