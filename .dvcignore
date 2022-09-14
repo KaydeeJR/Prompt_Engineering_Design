@@ -3,3 +3,4 @@
 # https://dvc.org/doc/user-guide/dvcignore
 /scripts
 /README.md
+/notebooks
