@@ -71,9 +71,9 @@ def db_execute_fetch(dBName, tablename, rdf=True, many=False, ) -> pd.DataFrame:
     """
     connection, cursor1 = DBConnect(dBName)
     if many:
-        cursor1.executemany(operation= 'SELECT * FROM newsarticles;')
+        cursor1.executemany(operation= f"""SELECT * FROM {tablename};""")
     else:
-        cursor1.execute(operation='SELECT * FROM newsarticles;')
+        cursor1.execute(operation=f"""SELECT * FROM {tablename};""")
 
     # get column names
     field_names = [i[0] for i in cursor1.description]
