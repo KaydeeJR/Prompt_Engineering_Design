@@ -1,16 +1,20 @@
 """
-A classifier using Cohere's embeddings
+Co:here's embedding endpoint
 """
-import pandas as pd
 import os
 import cohere
-from tqdm import tqdm
-from add_to_SQL_DB import db_execute_fetch
 
-# fetching data
-dataframe = db_execute_fetch(dBName='news', tablename='newsarticles')
-# text/word embedding
-co = cohere.Client(os.getenv('cohere_classification'))
-#TODO: INSERT DF FEATURES(SENTENCES)
-response = co.embed(
-    texts = , model="large", truncate="LEFT").embeddings
+def embed_data(data_to_convert):
+    """
+    perform text/word embedding i.e. convert the data into real-valued vectors
+    """
+    try:
+        co = cohere.Client(os.getenv('cohere_classification'))
+        response = co.embed(model='medium',
+        texts=data_to_convert)
+        return response.embeddings
+    
+    except cohere.CohereError as e:
+        print(e.message)
+        print(e.http_status)
+        print(e.headers)
