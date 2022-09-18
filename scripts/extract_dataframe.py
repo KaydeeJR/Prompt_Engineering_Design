@@ -1,6 +1,5 @@
 import pandas as pd
 import dvc.api
-import json
 
 def excel_to_dataframe(filePath,repository,version):
     """
@@ -26,3 +25,6 @@ KeyError: ('data', 'jobs_desc_training_data.txt')
     data = dvc.api.read(filePath,
     repo= repository)
     return pd.read_json(data)
+
+def save_df_to_csv(df, filePath):
+    df.to_csv(filePath)

@@ -1,0 +1,11 @@
+cohere==2.2.5
+dvc==2.24.0
+Flask==2.2.2
+google_api_python_client==2.61.0
+google_auth_oauthlib==0.5.2
+mlflow==1.28.0
+mysql_connector_repackaged==0.3.1
+numpy==1.22.4
+pandas==1.4.3
+protobuf==4.21.6
+scikit_learn==1.1.2
